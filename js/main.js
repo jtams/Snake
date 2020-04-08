@@ -47,7 +47,6 @@ class Snake {
         let a;
         this.ate ? (a = 1) : (a = 0);
         for (let j = this.segments.length - 1 - a; j >= 1; j--) {
-            console.log("J: ", j);
             this.segments[j].x = this.segments[j - 1].x;
             this.segments[j].y = this.segments[j - 1].y;
         }
@@ -84,6 +83,19 @@ function update() {
             break;
     }
 }
+
+document.addEventListener("keydown", (e) => {
+    key = e.key;
+    if (key == "w" || key == "ArrowUp") {
+        snake.direction = 0;
+    } else if (key == "a" || key == "ArrowLeft") {
+        snake.direction = 3;
+    } else if (key == "s" || key == "ArrowDown") {
+        snake.direction = 2;
+    } else if (key == "d" || key == "ArrowRight") {
+        snake.direction = 1;
+    }
+});
 
 //scale screen size
 //create movement ✔
