@@ -64,7 +64,6 @@ function createFood() {
     food.x *= snake.size;
     food.y = Math.floor(Math.random() * Math.floor(h));
     food.y *= snake.size;
-    console.log(food.x, food.y);
 }
 
 function endGame() {
@@ -133,7 +132,6 @@ function update() {
         if (snake.segments[0].x == food.x && snake.segments[0].y == food.y) {
             createFood();
             snake.addSegment();
-            console.log("Ate food");
         }
     }
 }
@@ -159,9 +157,3 @@ window.addEventListener(
     },
     false
 );
-
-//scale screen size ✔
-//create movement ✔
-//create food ✔
-//create snake segment extension: Tail appends in previous tails location ✔
-//lose ✔ kind of
