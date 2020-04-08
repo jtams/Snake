@@ -33,6 +33,7 @@ class Snake {
         this.segments.push({ x: 0, y: 0, i: 0 }); //Head
         this.direction = 1; //0: up, 1: right, 2: down, 3: left
         this.ate = false;
+        this.playing = true;
     }
 
     addSegment() {
@@ -57,6 +58,10 @@ class Snake {
 }
 
 snake = new Snake(20);
+snake.addSegment();
+snake.addSegment();
+snake.addSegment();
+snake.addSegment();
 
 function render() {
     ctx.fillStyle = "black";
@@ -68,19 +73,26 @@ function render() {
 }
 
 function update() {
-    switch (snake.direction) {
-        case 0:
-            snake.move(0, -snake.speed);
-            break;
-        case 1:
-            snake.move(snake.speed, 0);
-            break;
-        case 2:
-            snake.move(0, snake.speed);
-            break;
-        case 3:
-            snake.move(-snake.speed, 0);
-            break;
+    if (snake.playing) {
+        switch (snake.direction) {
+            case 0:
+                snake.move(0, -snake.speed);
+                break;
+            case 1:
+                snake.move(snake.speed, 0);
+                break;
+            case 2:
+                snake.move(0, snake.speed);
+                break;
+            case 3:
+                snake.move(-snake.speed, 0);
+                break;
+        }
+        for (let j = snake.segments.length - 1; j > 3; j--) {
+            if (snake.segments[j].x == snake.segments[0].x && snake.segments[j].y == snake.segments[0].y) {
+                console.log("Self Collision");
+            }
+        }
     }
 }
 
