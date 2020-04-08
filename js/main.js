@@ -6,7 +6,7 @@ app = () => {
     window.requestAnimationFrame(frame);
     (now = 0), (dt = 0);
     last = timestamp();
-    step = 1 / 7; //Speed
+    step = 1 / 9; //Speed
 };
 
 function timestamp() {
@@ -57,11 +57,32 @@ class Snake {
     }
 }
 
-snake = new Snake(Math.floor((window.innerWidth * window.innerHeight) / 50000));
+function createFood() {
+    let w = Math.floor(window.innerWidth / snake.size);
+    let h = Math.floor(window.innerHeight / snake.size);
+    food.x = Math.floor(Math.random() * Math.floor(w));
+    food.x *= snake.size;
+    food.y = Math.floor(Math.random() * Math.floor(h));
+    food.y *= snake.size;
+    console.log(food.x, food.y);
+}
+
+function endGame() {
+    snake = new Snake(Math.floor((window.innerWidth * window.innerHeight) / 30000));
+    snake.addSegment();
+    snake.addSegment();
+    snake.addSegment();
+    snake.addSegment();
+    createFood();
+}
+
+snake = new Snake(Math.floor((window.innerWidth * window.innerHeight) / 30000));
 snake.addSegment();
 snake.addSegment();
 snake.addSegment();
 snake.addSegment();
+let food = {};
+createFood();
 
 function render() {
     ctx.fillStyle = "black";
@@ -70,6 +91,8 @@ function render() {
     for (x = 0; x < snake.segments.length; x++) {
         ctx.fillRect(snake.segments[x].x, snake.segments[x].y, snake.size, snake.size);
     }
+    ctx.fillStyle = "lime";
+    ctx.fillRect(food.x, food.y, snake.size, snake.size);
 }
 
 function update() {
@@ -90,22 +113,27 @@ function update() {
         }
         for (let j = snake.segments.length - 1; j > 3; j--) {
             if (snake.segments[j].x == snake.segments[0].x && snake.segments[j].y == snake.segments[0].y) {
-                console.log("Self Collision");
+                endGame();
             }
         }
         if (snake.segments[0].x > window.innerWidth - snake.size) {
-            console.log(">X Collision");
-            snake.segments[0].x = 0;
+            //X
+            endGame();
         } else if (snake.segments[0].x < 0) {
-            console.log("<X Collision");
-            snake.segments[0].x = window.innerWidth;
+            endGame();
         }
+
         if (snake.segments[0].y > window.innerHeight - snake.size) {
-            console.log(">Y Collision");
-            snake.segments[0].y = 0;
+            //Y
+            endGame();
         } else if (snake.segments[0].y < 0) {
-            console.log("<Y Collision");
-            snake.segments[0].y = window.innerHeight;
+            endGame();
+        }
+
+        if (snake.segments[0].x == food.x && snake.segments[0].y == food.y) {
+            createFood();
+            snake.addSegment();
+            console.log("Ate food");
         }
     }
 }
@@ -132,9 +160,8 @@ window.addEventListener(
     false
 );
 
-//scale screen size
+//scale screen size ✔
 //create movement ✔
-//create food
+//create food ✔
 //create snake segment extension: Tail appends in previous tails location ✔
-//lose
-//win
+//lose ✔ kind of
