@@ -57,7 +57,7 @@ class Snake {
     }
 }
 
-snake = new Snake(20);
+snake = new Snake(Math.floor((window.innerWidth * window.innerHeight) / 50000));
 snake.addSegment();
 snake.addSegment();
 snake.addSegment();
@@ -93,6 +93,20 @@ function update() {
                 console.log("Self Collision");
             }
         }
+        if (snake.segments[0].x > window.innerWidth - snake.size) {
+            console.log(">X Collision");
+            snake.segments[0].x = 0;
+        } else if (snake.segments[0].x < 0) {
+            console.log("<X Collision");
+            snake.segments[0].x = window.innerWidth;
+        }
+        if (snake.segments[0].y > window.innerHeight - snake.size) {
+            console.log(">Y Collision");
+            snake.segments[0].y = 0;
+        } else if (snake.segments[0].y < 0) {
+            console.log("<Y Collision");
+            snake.segments[0].y = window.innerHeight;
+        }
     }
 }
 
@@ -108,6 +122,15 @@ document.addEventListener("keydown", (e) => {
         snake.direction = 1;
     }
 });
+
+window.addEventListener(
+    "resize",
+    () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    },
+    false
+);
 
 //scale screen size
 //create movement ✔
