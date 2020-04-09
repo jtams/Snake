@@ -113,6 +113,7 @@ function update() {
         for (let j = snake.segments.length - 1; j > 3; j--) {
             if (snake.segments[j].x == snake.segments[0].x && snake.segments[j].y == snake.segments[0].y) {
                 endGame();
+                break;
             }
         }
         if (snake.segments[0].x > window.innerWidth - snake.size) {
@@ -139,13 +140,21 @@ function update() {
 document.addEventListener("keydown", (e) => {
     key = e.key;
     if (key == "w" || key == "ArrowUp") {
-        snake.direction = 0;
+        if (snake.direction != 2) {
+            snake.direction = 0;
+        }
     } else if (key == "a" || key == "ArrowLeft") {
-        snake.direction = 3;
+        if (snake.direction != 1) {
+            snake.direction = 3;
+        }
     } else if (key == "s" || key == "ArrowDown") {
-        snake.direction = 2;
+        if (snake.direction != 0) {
+            snake.direction = 2;
+        }
     } else if (key == "d" || key == "ArrowRight") {
-        snake.direction = 1;
+        if (snake.direction != 3) {
+            snake.direction = 1;
+        }
     }
 });
 
